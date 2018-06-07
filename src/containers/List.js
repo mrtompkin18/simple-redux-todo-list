@@ -11,7 +11,7 @@ class List extends React.Component {
         this.state = {
             input: '',
             sortType: 'default',
-            datasUpdate: []
+            searchInput: ''
         }
     }
 
@@ -26,7 +26,7 @@ class List extends React.Component {
         var text = this.state.input
         if (this.isRepeat(text)) {
             this.props.add(text)
-            this.setState({ input: '', datasUpdate: [...this.props.datas.todos, { text }] }) // initail state
+            this.setState({ input: '' })
         } else {
             alert('Repeat')
             this.setState({ input: '' })
@@ -40,32 +40,14 @@ class List extends React.Component {
     }
 
     handleOnchangeSearch = (e) => {
-        const update = this.props.datas.todos.filter((todo) =>
-            (todo.text.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1))
-        this.setState({ datasUpdate: update })
+        this.setState({ searchInput: e.target.value })
     }
 
     handleRemove = (text) => {
-        this.setState({ datasUpdate: this.props.datas.todos })
         this.props.remove(text)
     }
 
-    sorting = () => {
-        const { datasUpdate } = this.state
-        this.setState({
-            sortType: 'asc'
-            , datasUpdate: datasUpdate.sort((a, b) => (a.text > b.text))
-        }) // asc
-        if (this.state.sortType === 'asc') {
-            this.setState({
-                sortType: 'desc'
-                , datasUpdate: datasUpdate.sort((a, b) => (a.text < b.text))
-            }) // desc
-        }
-    }
-
     render() {
-        const { sortType, datasUpdate } = this.state
         return (
             <div>
                 <div className="columns">
@@ -88,12 +70,8 @@ class List extends React.Component {
                         </div>
                         <br />
                     </div>
-                    <div className="column">
-                        <button type="button" className="button is-dark" onClick={this.sorting}>sort : {sortType}</button>
-                    </div>
                 </div>
-                <ItemList datas={datasUpdate} title="List of todos" hasButton={true} handleRemove={this.handleRemove} />
-                <ItemList datas={this.props.datas.history} title="List of history" hasButton={false} />
+                <ItemList datas={this.props.datas} searchInput={this.state.searchInput} handleRemove={this.handleRemove} />
             </div>
         )
     }
