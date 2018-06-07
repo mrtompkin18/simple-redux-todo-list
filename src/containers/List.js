@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ItemList from '../containers/ItemList';
-// import Search from '../containers/Search';
 import './style.css';
 import { addTodo, removeTodo } from '../actions';
 
@@ -17,20 +16,19 @@ class List extends React.Component {
     }
 
     isRepeat = (text) => {
-        return this.props.datas.todos.find((todo) => {
-            return todo.text === text
+        return this.props.datas.todos.every((todo) => {
+            return todo.text.toLowerCase() !== text.toLowerCase()
         })
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
         var text = this.state.input
-        var check = this.isRepeat(text) === undefined
-        if (check && text !== '') {
+        if (this.isRepeat(text)) {
             this.props.add(text)
-            this.setState({ input: '' })
+            this.setState({ input: '', datasUpdate: [...this.props.datas.todos, { text }] }) // initail state
         } else {
-            alert('shit! repeat/null')
+            alert('Repeat')
             this.setState({ input: '' })
         }
     }
@@ -42,28 +40,32 @@ class List extends React.Component {
     }
 
     handleOnchangeSearch = (e) => {
-        const update = this.props.datas.todos.find((todo) =>
-            todo.text === e.target.value)
-        this.setState({ datasUpdate: update === undefined ? [] : [update] })
+        const update = this.props.datas.todos.filter((todo) =>
+            (todo.text.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1))
+        this.setState({ datasUpdate: update })
     }
 
     handleRemove = (text) => {
+        this.setState({ datasUpdate: this.props.datas.todos })
         this.props.remove(text)
-        this.setState({ datasUpdate: [] })
     }
 
     sorting = () => {
-        this.setState({ sortType: 'asc' })
-    }
-
-    getSort = (todo) => {
-        return todo.sort((a, b) => (a.text > b.text)) // asc
+        const { datasUpdate } = this.state
+        this.setState({
+            sortType: 'asc'
+            , datasUpdate: datasUpdate.sort((a, b) => (a.text > b.text))
+        }) // asc
+        if (this.state.sortType === 'asc') {
+            this.setState({
+                sortType: 'desc'
+                , datasUpdate: datasUpdate.sort((a, b) => (a.text < b.text))
+            }) // desc
+        }
     }
 
     render() {
-        const { datas } = this.props
         const { sortType, datasUpdate } = this.state
-        const todosSorted = this.state.sortType !== 'default' ? this.getSort(datas.todos) : datas.todos
         return (
             <div>
                 <div className="columns">
@@ -90,8 +92,8 @@ class List extends React.Component {
                         <button type="button" className="button is-dark" onClick={this.sorting}>sort : {sortType}</button>
                     </div>
                 </div>
-                <ItemList datas={datasUpdate.length > 0 ? datasUpdate : todosSorted} title="List of todos" hasButton={true} handleRemove={this.handleRemove} />
-                <ItemList datas={datas.history} title="List of history" hasButton={false} />
+                <ItemList datas={datasUpdate} title="List of todos" hasButton={true} handleRemove={this.handleRemove} />
+                <ItemList datas={this.props.datas.history} title="List of history" hasButton={false} />
             </div>
         )
     }

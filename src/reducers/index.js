@@ -7,8 +7,8 @@ export const todoReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'ADD_TODO':
             return {
-                todos: [...state.todos,{ 'text': action.text }],
-                history: [...state.history,{'text' :action.text }]
+                todos: [...state.todos, { 'text': action.text }],
+                history: [...state.history, { 'text': action.text }]
             }
         case 'REMOVE_TODO':
             return {

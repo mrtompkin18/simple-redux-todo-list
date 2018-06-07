@@ -11,7 +11,6 @@ class ItemList extends React.Component {
 
     renderItemList = () => {
         const { datas } = this.props
-        console.log(datas.length)
         if (datas.length > 0) {
             return datas.map((data, key) => {
                 return (<div className="panel-block" key={key}>
