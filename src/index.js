@@ -6,7 +6,7 @@ import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import { todoReducer } from './reducers/';
 const store = createStore(combineReducers({
-    todos : todoReducer
+    datas : todoReducer
 }))
 
 ReactDOM.render(

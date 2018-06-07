@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import DisplayList from '../containers/display-list';
+import List from '../containers/List';
 
 class App extends Component {
   render() {
     return (
       <div className="container">
-        <div className = "title is-1" >List of todos </div>
-        <DisplayList/>
+        <div className="title is-1" >List </div>
+        <List />
       </div>
     );
   }
