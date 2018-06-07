@@ -1,17 +1,6 @@
 import React from 'react';
 class ItemList extends React.Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            datas: []
-        }
-    }
-
-    componentDidMount() {
-        this.setState({ datas: this.props.datas })
-    }
-
     hasButton = (text) => {
         if (this.props.hasButton) {
             return (
@@ -21,17 +10,24 @@ class ItemList extends React.Component {
     }
 
     renderItemList = () => {
-        const { datas } = this.state
-        return datas.map((data, key) => {
-            return (<div className="panel-block" key={key}>
-                {data.text}
-                {this.hasButton(data.text)}
-            </div>)
-        })
+        const { datas } = this.props
+        console.log(datas.length)
+        if (datas.length > 0) {
+            return datas.map((data, key) => {
+                return (<div className="panel-block" key={key}>
+                    {data.text}
+                    {this.hasButton(data.text)}
+                </div>)
+            })
+        } else {
+            return (
+                <div className="panel-block title is-4" > Not have data.</div>
+            )
+        }
+
     }
 
     render() {
-        console.log(this.state.datas)
         return (
             <div className="panel">
                 <p className="panel-heading" > {this.props.title} </p>

@@ -12,7 +12,7 @@ class List extends React.Component {
         this.state = {
             input: '',
             sortType: 'default',
-            searchFound: []
+            datasUpdate: []
         }
     }
 
@@ -36,14 +36,14 @@ class List extends React.Component {
     }
 
     handleOnchangeSearch = (e) => {
-        const found = this.props.datas.todos.find((todo) =>
+        const update = this.props.datas.todos.find((todo) =>
             todo.text === e.target.value)
-        this.setState({ searchFound: [found] })
+        this.setState({ datasUpdate: update === undefined ? [] : [update] })
     }
 
     handleRemove = (text) => {
         this.props.remove(text)
-        this.setState({ searchFound: undefined })
+        this.setState({ datasUpdate: [] })
     }
 
 
@@ -61,10 +61,9 @@ class List extends React.Component {
         return todo.sort((a, b) => (a.text > b.text)) // asc
     }
 
-
     render() {
         const { datas } = this.props
-        const { sortType, searchFound } = this.state
+        const { sortType, datasUpdate } = this.state
         const todosSorted = this.state.sortType !== 'default' ? this.getSort(datas.todos) : datas.todos
         return (
             <div>
@@ -86,7 +85,7 @@ class List extends React.Component {
                     </div>
                 </form>
                 <br />
-                <ItemList datas={todosSorted} search={searchFound} title="List of todos" hasButton={true} handleRemove={this.handleRemove} />
+                <ItemList datas={datasUpdate.length > 0 ? datasUpdate : todosSorted} title="List of todos" hasButton={true} handleRemove={this.handleRemove} />
                 <ItemList datas={datas.history} title="List of history" hasButton={false} />
             </div>
         )
@@ -103,5 +102,6 @@ const mapDispatchToProps = {
     remove: removeTodo,
     add: addTodo
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(List);
