@@ -16,6 +16,12 @@ class List extends React.Component {
         }
     }
 
+    isRepeat = (text) => {
+        return this.props.datas.todos.find((todo) => {
+            return todo.text === text
+        })
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
         var text = this.state.input
@@ -46,13 +52,6 @@ class List extends React.Component {
         this.setState({ datasUpdate: [] })
     }
 
-
-    isRepeat = (text) => {
-        return this.props.datas.todos.find((todo) => {
-            return todo.text === text
-        })
-    }
-
     sorting = () => {
         this.setState({ sortType: 'asc' })
     }
@@ -67,24 +66,30 @@ class List extends React.Component {
         const todosSorted = this.state.sortType !== 'default' ? this.getSort(datas.todos) : datas.todos
         return (
             <div>
-                <div>
-                    <div className="control" >
-                        <input type="text" className="input" placeholder="search" value={this.state.searchInput} onChange={this.handleOnchangeSearch} />
+                <div className="columns">
+                    <div className="column">
+                        <form onSubmit={this.handleSubmit}>
+                            <div className="field has-addons ">
+                                <div className="control" >
+                                    <input type="text" className="input" value={this.state.input} onChange={this.handleOnchange} placeholder="text" />
+                                </div>
+                                <div className="control" >
+                                    <button type="submit" className="button is-primary">add</button>
+                                </div>
+                            </div>
+                        </form>
+                        <br />
                     </div>
-                    <br />
+                    <div className="column">
+                        <div className="control" >
+                            <input type="text" className="input" placeholder="search" value={this.state.searchInput} onChange={this.handleOnchangeSearch} />
+                        </div>
+                        <br />
+                    </div>
+                    <div className="column">
+                        <button type="button" className="button is-dark" onClick={this.sorting}>sort : {sortType}</button>
+                    </div>
                 </div>
-                <button type="button" className="button is-dark sort" onClick={this.sorting}>sort : {sortType}</button>
-                <form onSubmit={this.handleSubmit}>
-                    <div className="field has-addons ">
-                        <div className="control" >
-                            <input type="text" className="input" value={this.state.input} onChange={this.handleOnchange} placeholder="text" />
-                        </div>
-                        <div className="control" >
-                            <button type="submit" className="button is-primary">add</button>
-                        </div>
-                    </div>
-                </form>
-                <br />
                 <ItemList datas={datasUpdate.length > 0 ? datasUpdate : todosSorted} title="List of todos" hasButton={true} handleRemove={this.handleRemove} />
                 <ItemList datas={datas.history} title="List of history" hasButton={false} />
             </div>

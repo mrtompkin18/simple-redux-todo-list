@@ -1,9 +1,13 @@
 .remove,
-.sort,
 .history {
     position: absolute;
     right: 10px;
 }
+
 .history{
     right: 70px;
+}
+
+.sort{
+    float: right;
 }
