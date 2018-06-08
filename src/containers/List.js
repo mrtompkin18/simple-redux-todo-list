@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ItemList from '../containers/ItemList';
+import SearchBar from '../containers/SearchBar';
 import './style.css';
 import { addTodo, removeTodo } from '../actions';
 
@@ -65,10 +66,7 @@ class List extends React.Component {
                         <br />
                     </div>
                     <div className="column">
-                        <div className="control" >
-                            <input type="text" className="input" placeholder="search" value={this.state.searchInput} onChange={this.handleOnchangeSearch} />
-                        </div>
-                        <br />
+                        <SearchBar value={this.state.searchInput} handleOnChange={this.handleOnchangeSearch} />
                     </div>
                 </div>
                 <ItemList datas={this.props.datas} searchInput={this.state.searchInput} handleRemove={this.handleRemove} />

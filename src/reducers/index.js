@@ -14,7 +14,7 @@ export const todoReducer = (state = initialState, action) => {
             }
         case 'REMOVE_TODO':
             return {
-                todos: state.todos.filter((todo) => todo.text.indexOf(action.text) === -1),
+                todos: state.todos.filter((todo) => todo.text !== action.text),
                 history: state.history
             }
         default:

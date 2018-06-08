@@ -6,7 +6,7 @@ class SearchBar extends React.Component {
         return (
             <div>
                 <div className="control" >
-                    <input type="text" className="input" placeholder="search" value={value} onKeyUp={handleOnChange} />
+                    <input type="text" className="input" placeholder="search" value={value} onChange={handleOnChange} />
                 </div>
                 <br />
             </div>

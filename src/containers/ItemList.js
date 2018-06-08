@@ -10,6 +10,7 @@ const propTypes = {
         todos: PropTypes.arrayOf(ItemsPropTypes).isRequired
     })
 }
+
 class ItemList extends React.Component {
 
     constructor(props) {
@@ -41,6 +42,7 @@ class ItemList extends React.Component {
         const searchList = this.getSort(datas).filter((data) => {
             return (data.text.toLowerCase().indexOf(searchInput.toLowerCase()) > -1)
         })
+
         if (searchList.length > 0) {
             return searchList.map((data, key) => {
                 return (<div className="panel-block" key={key}>
