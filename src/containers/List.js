@@ -26,7 +26,6 @@ class List extends React.Component {
         e.preventDefault();
         var text = this.state.input
         if (this.isRepeat(text)) {
-            console.log(typeof (text))
             this.props.add(text)
             this.setState({ input: '' })
         } else {

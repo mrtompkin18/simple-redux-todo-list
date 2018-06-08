@@ -47,6 +47,7 @@ class ItemList extends React.Component {
     }
 
     renderSearchItemList = (datas, searchInput) => {
+        const { handleRemove } = this.props
         const searchList = this.getSort(datas).filter((data) => {
             return (data.text.toLowerCase().indexOf(searchInput.toLowerCase()) > -1)
         })
@@ -55,7 +56,7 @@ class ItemList extends React.Component {
             return searchList.map((data, key) => {
                 return (<div className="panel-block" key={key}>
                     {data.text}
-                    <div className="button is-small is-danger remove " onClick={() => { this.props.handleRemove(data.text) }}>remove</div>
+                    <div className="button is-small is-danger remove " onClick={() => { handleRemove(data.text) }}>remove</div>
                 </div>)
             })
         } else {
@@ -76,17 +77,18 @@ class ItemList extends React.Component {
     }
 
     render() {
+        const { datas, searchInput } = this.props
         return (
             <div>
                 <div className="panel">
                     <div className="panel-heading" > List of todos
                         <button type="button" className="button is-dark  is-normal sort" onClick={this.sorting}>sort : {this.state.sortType}</button>
                     </div>
-                    {this.renderSearchItemList(this.props.datas.todos, this.props.searchInput)}
+                    {this.renderSearchItemList(datas.todos, searchInput)}
                 </div>
                 <div className="panel">
                     <div className="panel-heading" > List of history </div>
-                    {this.renderHistory(this.props.datas.history)}
+                    {this.renderHistory(datas.history)}
                 </div>
             </div>
         )
