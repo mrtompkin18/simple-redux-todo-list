@@ -11,6 +11,10 @@ const propTypes = {
     handleRemove: PropTypes.func
 }
 
+const defaultProps = {
+    handleRemove: () => { }
+}
+
 class ItemList extends React.Component {
 
     constructor(props) {
@@ -89,4 +93,5 @@ class ItemList extends React.Component {
     }
 }
 ItemList.propTypes = propTypes
+ItemList.defaultProps = defaultProps
 export default ItemList;
