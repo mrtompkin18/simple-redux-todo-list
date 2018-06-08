@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 
-const ItemsPropTypes = PropTypes.shape({
-    text: PropTypes.string.isRequired
-})
-
 const propTypes = {
     datas: PropTypes.shape({
-        todos: PropTypes.arrayOf(ItemsPropTypes).isRequired
-    })
+        todos: PropTypes.arrayOf(PropTypes.shape({
+            text: PropTypes.string.isRequired
+        }))
+    }),
+    searchInput: PropTypes.string,
+    handleRemove: PropTypes.func
 }
 
 class ItemList extends React.Component {
@@ -38,6 +38,10 @@ class ItemList extends React.Component {
         }
     }
 
+    textNotFound = () => {
+        return (<div className="panel-block title is-4"> Not found datas </div>)
+    }
+
     renderSearchItemList = (datas, searchInput) => {
         const searchList = this.getSort(datas).filter((data) => {
             return (data.text.toLowerCase().indexOf(searchInput.toLowerCase()) > -1)
@@ -51,7 +55,7 @@ class ItemList extends React.Component {
                 </div>)
             })
         } else {
-            return (<div className="panel-block title is-4"> Not found datas </div>)
+            return this.textNotFound()
         }
     }
 
@@ -63,7 +67,7 @@ class ItemList extends React.Component {
                 </div>)
             })
         } else {
-            return (<div className="panel-block title is-4"> Not found datas </div>)
+            return this.textNotFound()
         }
     }
 
@@ -84,6 +88,5 @@ class ItemList extends React.Component {
         )
     }
 }
-
-
+ItemList.propTypes = propTypes
 export default ItemList;

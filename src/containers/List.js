@@ -26,6 +26,7 @@ class List extends React.Component {
         e.preventDefault();
         var text = this.state.input
         if (this.isRepeat(text)) {
+            console.log(typeof (text))
             this.props.add(text)
             this.setState({ input: '' })
         } else {
@@ -66,7 +67,7 @@ class List extends React.Component {
                         <br />
                     </div>
                     <div className="column">
-                        <SearchBar value={this.state.searchInput} handleOnChange={this.handleOnchangeSearch} />
+                        <SearchBar value={this.state.searchInput} onChange={this.handleOnchangeSearch} />
                     </div>
                 </div>
                 <ItemList datas={this.props.datas} searchInput={this.state.searchInput} handleRemove={this.handleRemove} />
