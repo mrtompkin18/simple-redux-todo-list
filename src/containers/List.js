@@ -66,7 +66,7 @@ class List extends React.Component {
                         <br />
                     </div>
                     <div className="column">
-                        <SearchBar value={this.state.searchInput} onChange={this.handleOnchangeSearch} />
+                        <SearchBar onChange={this.handleOnchangeSearch} />
                     </div>
                 </div>
                 <ItemList datas={this.props.datas} searchInput={this.state.searchInput} handleRemove={this.handleRemove} />

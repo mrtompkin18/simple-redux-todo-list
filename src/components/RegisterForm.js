@@ -25,7 +25,7 @@ class RegisterForm extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         const { getFieldValue, validateFields } = this.props.form
-        this.props.form.validateFields((err) => {
+        validateFields((err) => {
             if (err === null) {
                 this.setState({
                     fname: getFieldValue('fname'),
